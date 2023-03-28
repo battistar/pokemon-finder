@@ -1,7 +1,7 @@
 import { useReducer, useEffect, createContext, useContext, useCallback, useMemo } from 'react';
 import pokemonJSON from 'assets/pokemon.json';
 
-interface Pokemon {
+export interface Pokemon {
   id: number;
   name: string;
   type: string[];
