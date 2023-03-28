@@ -1,8 +1,11 @@
-const App = () => {
+import { PokemonProvider } from 'providers/store';
+
+const App = (): JSX.Element => {
   return (
-    <div>
-    </div>
+    <PokemonProvider>
+      <div></div>
+    </PokemonProvider>
   );
-}
+};
 
 export default App;
