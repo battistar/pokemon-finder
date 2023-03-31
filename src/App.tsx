@@ -19,6 +19,7 @@ const Search = (): JSX.Element => {
         type="text"
         placeholder="Search Pokemon..."
         autoComplete="off"
+        autoFocus
         onChange={handleChange}
         value={search}
       />
