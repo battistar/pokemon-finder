@@ -1,10 +1,30 @@
 import { useReducer, useEffect, createContext, useContext, useCallback, useMemo } from 'react';
 import pokemonJSON from 'assets/pokemon.json';
 
+export type Type =
+  | 'Grass'
+  | 'Poison'
+  | 'Fire'
+  | 'Flying'
+  | 'Water'
+  | 'Bug'
+  | 'Normal'
+  | 'Electric'
+  | 'Ground'
+  | 'Fairy'
+  | 'Fighting'
+  | 'Psychic'
+  | 'Rock'
+  | 'Steel'
+  | 'Ice'
+  | 'Ghost'
+  | 'Dragon'
+  | 'Dark';
+
 export interface Pokemon {
   id: number;
   name: string;
-  type: string[];
+  type: Type[];
   hp: number;
   attack: number;
   defense: number;
@@ -41,7 +61,7 @@ const usePokemonSource = (): {
   );
 
   useEffect(() => {
-    dispatch({ type: 'SET_POKEMON', payload: pokemonJSON });
+    dispatch({ type: 'SET_POKEMON', payload: pokemonJSON as Pokemon[] });
   }, []);
 
   const setSearch = useCallback((search: string) => {

@@ -1,17 +1,5 @@
-import { PokemonProvider, usePokemon, Pokemon } from 'providers/store';
-
-const Card = ({ pokemon }: { pokemon: Pokemon }): JSX.Element => {
-  return (
-    <div className="card">
-      <img
-        className="card--image"
-        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`}
-        alt={pokemon.name}
-      />
-      <h3 className="card--title">{pokemon.name}</h3>
-    </div>
-  );
-};
+import Card from 'components/Card';
+import { PokemonProvider, usePokemon } from 'providers/store';
 
 const PokemonList = (): JSX.Element => {
   const { pokemon } = usePokemon();

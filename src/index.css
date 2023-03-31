@@ -24,6 +24,7 @@ main {
 }
 
 .card {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -33,6 +34,7 @@ main {
   padding: 16px;
   box-shadow: 2px 2px 8px;
   margin: 16px;
+  overflow: hidden;
 }
 
 .card--image {
@@ -41,6 +43,139 @@ main {
 
 .card--title {
   margin: 0;
+}
+
+.card--type {
+  display: flex;
+  gap: 8px;
+}
+
+.card > .card--param-list {
+  display: none;
+}
+
+.card:hover > .card--param-list {
+  display: block;
+  position: absolute;
+  margin: 0;
+  padding: 24px;
+  list-style-type: none;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(50, 50, 50, 0.8);
+}
+
+.card--param-list > .card--param-item {
+  margin-bottom: 16px;
+}
+
+.card--param-item {
+  padding: 4px 8px;
+  border-radius: 16px;
+}
+
+.card--param-item.hp {
+  background-color: #ff0000;
+}
+
+.card--param-item.attack {
+  background-color: #f08030;
+}
+
+.card--param-item.defence {
+  background-color: #f8d030;
+}
+
+.card--param-item.special-attack {
+  background-color: #6890f0;
+}
+
+.card--param-item.special-defence {
+  background-color: #78c850;
+}
+
+.card--param-item.speed {
+  background-color: #f85888;
+}
+
+.chip {
+  text-align: center;
+  border-radius: 16px;
+  padding: 6px 12px;
+}
+
+.chip.grass {
+  background-color: #7ac74c;
+}
+
+.chip.poison {
+  background-color: #a33ea1;
+}
+
+.chip.fire {
+  background-color: #ee8130;
+}
+
+.chip.flying {
+  background-color: #a98ff3;
+}
+
+.chip.water {
+  background-color: #6390f0;
+}
+
+.chip.bug {
+  background-color: #a6b91a;
+}
+
+.chip.normal {
+  background-color: #a8a77a;
+}
+
+.chip.electric {
+  background-color: #f7d02c;
+}
+
+.chip.ground {
+  background-color: #e2bf65;
+}
+
+.chip.fairy {
+  background-color: #d685ad;
+}
+
+.chip.fighting {
+  background-color: #c22e28;
+}
+
+.chip.psychic {
+  background-color: #f95587;
+}
+
+.chip.rock {
+  background-color: #b6a136;
+}
+
+.chip.steel {
+  background-color: #b7b7ce;
+}
+
+.chip.ice {
+  background-color: #96d9d6;
+}
+
+.chip.ghost {
+  background-color: #735797;
+}
+
+.chip.dragon {
+  background-color: #6f35fc;
+}
+
+.chip.dark {
+  background-color: #705746;
 }
 
 .row {
@@ -67,6 +202,10 @@ main {
   .row > .col-s-10 {width: 83.33%;}
   .row > .col-s-11 {width: 91.66%;}
   .row > .col-s-12 {width: 100%;}
+
+  .card--param-list > .card--param-item {
+    font-size: 0.9rem;
+  }
 }
 
 @media (min-width: 768px) {
@@ -82,6 +221,10 @@ main {
   .row > .col-m-10 {width: 83.33%;}
   .row > .col-m-11 {width: 91.66%;}
   .row > .col-m-12 {width: 100%;}
+
+  .card--param-list > .card--param-item {
+    font-size: 0.8rem;
+  }
 }
 
 @media (min-width: 992px) {
@@ -97,4 +240,8 @@ main {
   .row > .col-l-10 {width: 83.33%;}
   .row > .col-l-11 {width: 91.66%;}
   .row > .col-l-12 {width: 100%;}
+
+  .card--param-list > .card--param-item {
+    font-size: 0.75rem;
+  }
 }
