@@ -18,6 +18,7 @@ const Search = (): JSX.Element => {
         name="search"
         type="text"
         placeholder="Search Pokemon..."
+        autoComplete="off"
         onChange={handleChange}
         value={search}
       />
