@@ -71,15 +71,13 @@ const usePokemonSource = (): {
     });
   }, []);
 
-  const filteredPokemon = useMemo(
-    () => store.pokemon.filter((p) => p.name.toLowerCase().includes(store.search.toLowerCase())).slice(0, 20),
-    [store.pokemon, store.search]
-  );
+  const filteredPokemon = useMemo(() => {
+    return store.pokemon.filter((p) => p.name.toLowerCase().includes(store.search.toLowerCase())).slice(0, 20);
+  }, [store.pokemon, store.search]);
 
-  const sortedPokemon = useMemo(
-    () => [...filteredPokemon].sort((a, b) => a.name.localeCompare(b.name)),
-    [filteredPokemon]
-  );
+  const sortedPokemon = useMemo(() => {
+    return [...filteredPokemon].sort((a, b) => a.id - b.id);
+  }, [filteredPokemon]);
 
   return { pokemon: sortedPokemon, search: store.search, setSearch };
 };
