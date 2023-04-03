@@ -1,5 +1,6 @@
-import { useReducer, useEffect, createContext, useContext, useCallback, useMemo } from 'react';
 import pokemonJSON from 'assets/pokemon.json';
+import { PayloadAction, configureStore, createSlice } from '@reduxjs/toolkit';
+import { Provider, useDispatch, useSelector } from 'react-redux';
 
 export type Type =
   | 'Grass'
@@ -33,61 +34,51 @@ export interface Pokemon {
   speed: number;
 }
 
-const usePokemonSource = (): {
-  pokemon: Pokemon[];
+interface PokemonState {
+  pokemonList: Pokemon[];
+  filteredPokemonList: Pokemon[];
   search: string;
-  setSearch: (search: string) => void;
-} => {
-  type PokemonState = {
-    pokemon: Pokemon[];
-    search: string;
-  };
+}
 
-  type PokemonAction = { type: 'SET_POKEMON'; payload: Pokemon[] } | { type: 'SET_SEARCH'; payload: string };
+const initialState: PokemonState = {
+  pokemonList: pokemonJSON as Pokemon[],
+  filteredPokemonList: pokemonJSON as Pokemon[],
+  search: '',
+};
 
-  const [store, dispatch] = useReducer(
-    (state: PokemonState, action: PokemonAction) => {
-      switch (action.type) {
-        case 'SET_POKEMON':
-          return { ...state, pokemon: action.payload };
-        case 'SET_SEARCH':
-          return { ...state, search: action.payload };
-      }
+const pokemonSlice = createSlice({
+  name: 'pokemon',
+  initialState,
+  reducers: {
+    setSearch: (state, action: PayloadAction<string>) => {
+      state.search = action.payload.toLocaleLowerCase();
+      state.filteredPokemonList = state.pokemonList
+        .filter((p) => p.name.toLowerCase().includes(action.payload.toLowerCase()))
+        .slice(0, 20)
+        .sort((a, b) => a.id - b.id);
     },
-    {
-      pokemon: [],
-      search: '',
-    }
-  );
+  },
+});
 
-  useEffect(() => {
-    dispatch({ type: 'SET_POKEMON', payload: pokemonJSON as Pokemon[] });
-  }, []);
+const { setSearch } = pokemonSlice.actions;
 
-  const setSearch = useCallback((search: string) => {
-    dispatch({
-      type: 'SET_SEARCH',
-      payload: search,
-    });
-  }, []);
+const store = configureStore({
+  reducer: {
+    pokemon: pokemonSlice.reducer,
+  },
+});
 
-  const filteredPokemon = useMemo(() => {
-    return store.pokemon.filter((p) => p.name.toLowerCase().includes(store.search.toLowerCase())).slice(0, 20);
-  }, [store.pokemon, store.search]);
+type RootState = ReturnType<typeof store.getState>;
 
-  const sortedPokemon = useMemo(() => {
-    return [...filteredPokemon].sort((a, b) => a.id - b.id);
-  }, [filteredPokemon]);
-
-  return { pokemon: sortedPokemon, search: store.search, setSearch };
+export const PokemonProvider = ({ children }: { children: JSX.Element }): JSX.Element => {
+  return <Provider store={store}>{children}</Provider>;
 };
 
-const PokemonContext = createContext<ReturnType<typeof usePokemonSource>>({} as ReturnType<typeof usePokemonSource>);
+export const usePokemon = (): { pokemon: Pokemon[]; search: string; setSearch: (search: string) => void } => {
+  const pokemon = useSelector((state: RootState) => state.pokemon.filteredPokemonList);
+  const search = useSelector((state: RootState) => state.pokemon.search);
 
-export const usePokemon = (): ReturnType<typeof usePokemonSource> => {
-  return useContext(PokemonContext);
-};
+  const dispatch = useDispatch();
 
-export const PokemonProvider = ({ children }: { children: React.ReactNode }): JSX.Element => {
-  return <PokemonContext.Provider value={usePokemonSource()}>{children}</PokemonContext.Provider>;
+  return { pokemon, search, setSearch: (s) => dispatch(setSearch(s)) };
 };
