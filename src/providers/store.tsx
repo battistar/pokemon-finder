@@ -1,5 +1,5 @@
 import pokemonJSON from 'assets/pokemon.json';
-import { PayloadAction, configureStore, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, configureStore, createSelector, createSlice } from '@reduxjs/toolkit';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 
 export type Type =
@@ -36,13 +36,11 @@ export interface Pokemon {
 
 interface PokemonState {
   pokemonList: Pokemon[];
-  filteredPokemonList: Pokemon[];
   search: string;
 }
 
 const initialState: PokemonState = {
   pokemonList: pokemonJSON as Pokemon[],
-  filteredPokemonList: pokemonJSON as Pokemon[],
   search: '',
 };
 
@@ -52,10 +50,6 @@ const pokemonSlice = createSlice({
   reducers: {
     setSearch: (state, action: PayloadAction<string>) => {
       state.search = action.payload.toLocaleLowerCase();
-      state.filteredPokemonList = state.pokemonList
-        .filter((p) => p.name.toLowerCase().includes(action.payload.toLowerCase()))
-        .slice(0, 20)
-        .sort((a, b) => a.id - b.id);
     },
   },
 });
@@ -70,13 +64,27 @@ const store = configureStore({
 
 type RootState = ReturnType<typeof store.getState>;
 
+const selectPokemon = createSelector(
+  (state: RootState) => state.pokemon.pokemonList,
+  (state: RootState) => state.pokemon.search,
+  (pokemonList, search) =>
+    pokemonList
+      .filter((pokemon) => pokemon.name.toLowerCase().includes(search.toLowerCase()))
+      .slice(0, 10)
+      .sort((a, b) => a.id - b.id)
+);
+
+const selectSearch = (state: RootState): string => {
+  return state.pokemon.search;
+};
+
 export const PokemonProvider = ({ children }: { children: JSX.Element }): JSX.Element => {
   return <Provider store={store}>{children}</Provider>;
 };
 
 export const usePokemon = (): { pokemon: Pokemon[]; search: string; setSearch: (search: string) => void } => {
-  const pokemon = useSelector((state: RootState) => state.pokemon.filteredPokemonList);
-  const search = useSelector((state: RootState) => state.pokemon.search);
+  const pokemon = useSelector(selectPokemon);
+  const search = useSelector(selectSearch);
 
   const dispatch = useDispatch();
 
