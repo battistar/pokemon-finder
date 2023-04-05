@@ -40,6 +40,7 @@ main {
   justify-content: center;
   align-items: center;
   max-width: 100%;
+  user-select: none;
 }
 
 .card {
@@ -52,6 +53,7 @@ main {
   border-radius: 32px;
   padding: 16px;
   margin: 16px;
+  will-change: transform;
   overflow: hidden;
 }
 
@@ -82,8 +84,16 @@ main {
   transition: 0.4s;
 }
 
-.card:hover > .card--param-list {
-  opacity: 1;
+@media (hover: none) {
+  .card:active > .card--param-list {
+    opacity: 1;
+  }
+}
+
+@media (hover: hover) {
+  .card:hover > .card--param-list {
+    opacity: 1;
+  }
 }
 
 .card--param-list > .card--param-item {
