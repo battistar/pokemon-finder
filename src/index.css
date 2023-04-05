@@ -39,7 +39,7 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-  max-width: 1200px;
+  max-width: 100%;
 }
 
 .card {
@@ -202,6 +202,7 @@ main {
   justify-content: flex-start;
   align-items: flex-start;
   flex-wrap: wrap;
+  width: 100%;
 }
 
 .row > [class*="col-"] {
@@ -262,5 +263,11 @@ main {
 
   .card--param-list > .card--param-item {
     font-size: 0.75rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .list-container {
+    width: 1200px;
   }
 }
