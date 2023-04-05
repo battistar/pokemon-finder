@@ -70,8 +70,8 @@ const selectPokemon = createSelector(
   (pokemonList, search) =>
     pokemonList
       .filter((pokemon) => pokemon.name.toLowerCase().includes(search.toLowerCase()))
-      .slice(0, 10)
-      .sort((a, b) => a.id - b.id)
+      .sort((a, b) => a.name.localeCompare(b.name))
+      .slice(0, 12)
 );
 
 const selectSearch = (state: RootState): string => {
