@@ -1,29 +1,42 @@
 import Card from 'components/Card';
-import { PokemonProvider, usePokemon } from 'providers/store';
-import { ChangeEvent } from 'react';
+import FilterChip from 'components/FilterChip';
+import Search from 'components/Search';
+import { PokemonProvider, Type, types, usePokemon } from 'providers/store';
+import { useCallback } from 'react';
 
-const Search = (): JSX.Element => {
-  const { search, setSearch } = usePokemon();
+const Filters = (): JSX.Element => {
+  const { filters, setSearch, setType } = usePokemon();
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    const text = event.target.value;
+  const handleClickChip = useCallback(
+    (type: Type): void => {
+      setType(type);
+    },
+    [setType]
+  );
 
-    setSearch(text);
-  };
+  const handleChangeSearch = useCallback(
+    (text: string): void => {
+      setSearch(text);
+    },
+    [setSearch]
+  );
 
   return (
-    <div className="search">
-      <input
-        className="search--input"
-        name="search"
-        type="text"
-        placeholder="Search Pokemon..."
-        autoComplete="off"
-        autoFocus
-        onChange={handleChange}
-        value={search}
-      />
-    </div>
+    <>
+      <Search value={filters.search} onChange={handleChangeSearch} />
+      <div className="filter--types-container">
+        {types.map((type) => {
+          return (
+            <FilterChip
+              key={type}
+              type={type as Type}
+              onClick={handleClickChip}
+              active={filters.types.includes(type as Type)}
+            />
+          );
+        })}
+      </div>
+    </>
   );
 };
 
@@ -49,7 +62,7 @@ const App = (): JSX.Element => {
   return (
     <PokemonProvider>
       <main>
-        <Search />
+        <Filters />
         <PokemonList />
       </main>
     </PokemonProvider>
