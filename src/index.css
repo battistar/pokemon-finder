@@ -11,6 +11,15 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+input, textarea, button, select, a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  color: #000000;
+  user-select: none;
+}
+
 main {
   width: 100vw;
   padding: 16px;
@@ -26,11 +35,44 @@ main {
   align-items: center;
   gap: 16px;
   padding: 16px;
+  width: 100%;
+}
+
+.filter-advanced--toggle {
+  width: 100%;
+  max-width: 600px;
+  padding: 8px;
+  border: none;
+  border-radius: 16px;
+  background-color: transparent;
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.filter-advanced--toggle:active:enabled {
+  background-color: rgba(128, 128, 128, 0.2);
+}
+
+@media (hover: hover) {
+  .filter-advanced--toggle:hover {
+    background-color: rgba(128, 128, 128, 0.2);
+  }
+}
+
+.filter-advanced--container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.filter-advanced--container.hide {
+  display: none;
 }
 
 .search {
   width: 100%;
-  gap: 8px;
   max-width: 600px;
 }
 
@@ -43,7 +85,7 @@ main {
   outline: none;
 }
 
-.filter--types-container {
+.filter-advanced--types-container {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -53,7 +95,7 @@ main {
   max-width: 600px;
 }
 
-.filter--range-container {
+.filter-advanced--range-container {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -334,6 +376,7 @@ main {
   border-radius: 16px;
   padding: 4px 8px;
   background-color: transparent;
+  transition: 0.4s;
   cursor: pointer;
 }
 
@@ -341,212 +384,215 @@ main {
   border: 2px solid #7ac74c;
 }
 
-.filter-chip.grass:hover {
-  background-color: rgba(121, 199, 76, 0.5);
-}
-
-.filter-chip.grass.active {
-  background-color: #7ac74c;
-}
-
 .filter-chip.poison {
   border: 2px solid #a33ea1;
-}
-
-.filter-chip.poison:hover {
-  background-color: rgba(163, 62, 161, 0.5);
-}
-
-.filter-chip.poison.active {
-  background-color: #a33ea1;
 }
 
 .filter-chip.fire {
   border: 2px solid #ee8130;
 }
 
-.filter-chip.fire:hover {
-  background-color: rgba(238, 130, 48, 0.5);
-}
-
-.filter-chip.fire.active {
-  background-color: #ee8130;
-}
-
 .filter-chip.flying {
   border: 2px solid #a98ff3;
-}
-
-.filter-chip.flying:hover {
-  background-color: rgba(170, 143, 243, 0.5);
-}
-
-.filter-chip.flying.active {
-  background-color: #a98ff3;
 }
 
 .filter-chip.water {
   border: 2px solid #6390f0;
 }
 
-.filter-chip.water:hover {
-  background-color: rgba(99, 144, 240, 0.5);
-}
-
-.filter-chip.water.active {
-  background-color: #6390f0;
-}
-
 .filter-chip.bug {
   border: 2px solid #a6b91a;
-}
-
-.filter-chip.bug:hover {
-background-color: rgba(166, 185, 26, 0.5);
-}
-
-.filter-chip.bug.active {
-  background-color: #a6b91a;
 }
 
 .filter-chip.normal {
   border: 2px solid #a8a77a;
 }
 
-.filter-chip.normal:hover {
-  background-color: rgba(168, 167, 122, 0.5);
-}
-
-.filter-chip.normal.active {
-  background-color: #a8a77a;
-}
-
 .filter-chip.electric {
   border: 2px solid #f7d02c;
-}
-
-.filter-chip.electric:hover {
-  background-color: rgba(247, 206, 44, 0.5);
-}
-
-.filter-chip.electric.active {
-  background-color: #f7d02c;
 }
 
 .filter-chip.ground {
   border: 2px solid #e2bf65;
 }
 
-.filter-chip.ground:hover {
-  background-color: rgba(226, 191, 101, 0.5);
-}
-
-.filter-chip.ground.active {
-  background-color: #e2bf65;
-}
-
 .filter-chip.fairy {
   border: 2px solid #d685ad;
-}
-
-.filter-chip.fairy:hover {
-  background-color: rgba(214, 133, 173, 0.5);
-}
-
-.filter-chip.fairy.active {
-  background-color: #d685ad;
 }
 
 .filter-chip.fighting {
   border: 2px solid #c22e28;
 }
 
-.filter-chip.fighting:hover {
-  background-color: rgba(194, 46, 40, 0.5);
-}
-
-.filter-chip.fighting.active {
-  background-color: #c22e28;
-}
-
 .filter-chip.psychic {
   border: 2px solid #f95587;
-}
-
-.filter-chip.psychic:hover {
-  background-color: rgba(249, 85, 134, 0.5);
-}
-
-.filter-chip.psychic.active {
-  background-color: #f95587;
 }
 
 .filter-chip.rock {
   border: 2px solid #b6a136;
 }
 
-.filter-chip.rock:hover {
-  background-color: rgba(182, 161, 54, 0.5);
-}
-
-.filter-chip.rock.active {
-  background-color: #b6a136;
-}
-
 .filter-chip.steel {
   border: 2px solid #b7b7ce;
-}
-
-.filter-chip.steel:hover {
-  background-color: rgba(183, 183, 206, 0.5);
-}
-
-.filter-chip.steel.active {
-  background-color: #b7b7ce;
 }
 
 .filter-chip.ice {
   border: 2px solid #96d9d6;
 }
 
-.filter-chip.ice:hover {
-  background-color: rgba(150, 217, 214, 0.5);
-}
-
-.filter-chip.ice.active {
-  background-color: #96d9d6;
-}
-
 .filter-chip.ghost {
   border: 2px solid #735797;
-}
-
-.filter-chip.ghost:hover {
-  background-color: rgba(115, 87, 151, 0.5);
-}
-
-.filter-chip.ghost.active {
-  background-color: #735797;
 }
 
 .filter-chip.dragon {
   border: 2px solid #6f35fc;
 }
 
-.filter-chip.dragon:hover {
-  background-color: rgba(109, 53, 252, 0.5);
-}
-
-.filter-chip.dragon.active {
-  background-color: #6f35fc;
-}
-
 .filter-chip.dark {
   border: 2px solid #705746;
 }
 
-.filter-chip.dark:hover {
-  background-color: rgba(112, 87, 70, 0.5);
+@media (hover: hover) {
+  .filter-chip.grass:hover {
+    background-color: rgba(121, 199, 76, 0.5);
+  }
+
+  .filter-chip.poison:hover {
+    background-color: rgba(163, 62, 161, 0.5);
+  }
+
+  .filter-chip.fire:hover {
+    background-color: rgba(238, 130, 48, 0.5);
+  }
+
+  .filter-chip.flying:hover {
+    background-color: rgba(170, 143, 243, 0.5);
+  }
+
+  .filter-chip.water:hover {
+    background-color: rgba(99, 144, 240, 0.5);
+  }
+
+  
+  .filter-chip.bug:hover {
+  background-color: rgba(166, 185, 26, 0.5);
+  }
+
+  .filter-chip.normal:hover {
+    background-color: rgba(168, 167, 122, 0.5);
+  }
+
+  .filter-chip.electric:hover {
+    background-color: rgba(247, 206, 44, 0.5);
+  }
+
+  .filter-chip.ground:hover {
+    background-color: rgba(226, 191, 101, 0.5);
+  }
+
+  .filter-chip.fairy:hover {
+    background-color: rgba(214, 133, 173, 0.5);
+  }
+
+  .filter-chip.fighting:hover {
+    background-color: rgba(194, 46, 40, 0.5);
+  }
+
+  .filter-chip.psychic:hover {
+    background-color: rgba(249, 85, 134, 0.5);
+  }
+
+  .filter-chip.rock:hover {
+    background-color: rgba(182, 161, 54, 0.5);
+  }
+
+  .filter-chip.steel:hover {
+    background-color: rgba(183, 183, 206, 0.5);
+  }
+
+  .filter-chip.ice:hover {
+    background-color: rgba(150, 217, 214, 0.5);
+  }
+
+  .filter-chip.ghost:hover {
+    background-color: rgba(115, 87, 151, 0.5);
+  }
+
+  .filter-chip.dragon:hover {
+    background-color: rgba(109, 53, 252, 0.5);
+  }
+
+  .filter-chip.dark:hover {
+    background-color: rgba(112, 87, 70, 0.5);
+  }
+}
+
+.filter-chip.poison.active {
+  background-color: #a33ea1;
+}
+
+.filter-chip.fire.active {
+  background-color: #ee8130;
+}
+
+.filter-chip.flying.active {
+  background-color: #a98ff3;
+}
+
+.filter-chip.water.active {
+  background-color: #6390f0;
+}
+
+.filter-chip.grass.active {
+  background-color: #7ac74c;
+}
+
+.filter-chip.bug.active {
+  background-color: #a6b91a;
+}
+
+.filter-chip.normal.active {
+  background-color: #a8a77a;
+}
+
+.filter-chip.electric.active {
+  background-color: #f7d02c;
+}
+
+.filter-chip.ground.active {
+  background-color: #e2bf65;
+}
+
+.filter-chip.fairy.active {
+  background-color: #d685ad;
+}
+
+.filter-chip.fighting.active {
+  background-color: #c22e28;
+}
+
+.filter-chip.psychic.active {
+  background-color: #f95587;
+}
+
+.filter-chip.rock.active {
+  background-color: #b6a136;
+}
+
+.filter-chip.steel.active {
+  background-color: #b7b7ce;
+}
+
+.filter-chip.ice.active {
+  background-color: #96d9d6;
+}
+
+.filter-chip.ghost.active {
+  background-color: #735797;
+}
+
+.filter-chip.dragon.active {
+  background-color: #6f35fc;
 }
 
 .filter-chip.dark.active {
