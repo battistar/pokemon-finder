@@ -1,11 +1,13 @@
 import Card from 'components/Card';
+import DualRangeSlider from 'components/DualRangeSlider';
 import FilterChip from 'components/FilterChip';
 import Search from 'components/Search';
-import { PokemonProvider, Type, types, usePokemon } from 'providers/store';
+import { PokemonProvider, Type, attributes, types, usePokemon } from 'providers/store';
 import { useCallback } from 'react';
 
 const Filters = (): JSX.Element => {
-  const { filters, setSearch, setType } = usePokemon();
+  const { filters, setSearch, setType, setHP, setAttack, setDefense, setSpecialAttack, setSpecialDefense, setSpeed } =
+    usePokemon();
 
   const handleClickChip = useCallback(
     (type: Type): void => {
@@ -21,8 +23,50 @@ const Filters = (): JSX.Element => {
     [setSearch]
   );
 
+  const handleHPChange = useCallback(
+    (range: [number, number]) => {
+      setHP(range);
+    },
+    [setHP]
+  );
+
+  const handleAttackChange = useCallback(
+    (range: [number, number]) => {
+      setAttack(range);
+    },
+    [setAttack]
+  );
+
+  const handleDefenseChange = useCallback(
+    (range: [number, number]) => {
+      setDefense(range);
+    },
+    [setDefense]
+  );
+
+  const handleSpecialAttackChange = useCallback(
+    (range: [number, number]) => {
+      setSpecialAttack(range);
+    },
+    [setSpecialAttack]
+  );
+
+  const handleSpecialDefenseChange = useCallback(
+    (range: [number, number]) => {
+      setSpecialDefense(range);
+    },
+    [setSpecialDefense]
+  );
+
+  const handleSpeedChange = useCallback(
+    (range: [number, number]) => {
+      setSpeed(range);
+    },
+    [setSpeed]
+  );
+
   return (
-    <>
+    <div className="filter--container">
       <Search value={filters.search} onChange={handleChangeSearch} />
       <div className="filter--types-container">
         {types.map((type) => {
@@ -36,7 +80,51 @@ const Filters = (): JSX.Element => {
           );
         })}
       </div>
-    </>
+      <div className="filter--range-container">
+        <DualRangeSlider
+          title="HP"
+          min={attributes.hp.min}
+          max={attributes.hp.max}
+          value={filters.hp}
+          onChange={handleHPChange}
+        />
+        <DualRangeSlider
+          title="Attack"
+          min={attributes.attack.min}
+          max={attributes.attack.max}
+          value={filters.attack}
+          onChange={handleAttackChange}
+        />
+        <DualRangeSlider
+          title="Defense"
+          min={attributes.defense.min}
+          max={attributes.defense.max}
+          value={filters.defense}
+          onChange={handleDefenseChange}
+        />
+        <DualRangeSlider
+          title="Special Attack"
+          min={attributes.specialAttack.min}
+          max={attributes.specialAttack.max}
+          value={filters.specialAttack}
+          onChange={handleSpecialAttackChange}
+        />
+        <DualRangeSlider
+          title="Special Defense"
+          min={attributes.specialDefense.min}
+          max={attributes.specialDefense.max}
+          value={filters.specialDefense}
+          onChange={handleSpecialDefenseChange}
+        />
+        <DualRangeSlider
+          title="Speed"
+          min={attributes.speed.min}
+          max={attributes.speed.max}
+          value={filters.speed}
+          onChange={handleSpeedChange}
+        />
+      </div>
+    </div>
   );
 };
 
