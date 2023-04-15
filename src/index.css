@@ -28,13 +28,13 @@ main {
   align-items: center;
 }
 
-.filter--container {
+.filter--container,.filter-advanced--container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 16px;
-  padding: 16px;
+  padding: 8px 16px;
   width: 100%;
 }
 
@@ -59,7 +59,7 @@ main {
   }
 }
 
-.filter-advanced--container {
+.filter-advanced--content {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -67,7 +67,7 @@ main {
   gap: 16px;
 }
 
-.filter-advanced--container.hide {
+.filter-advanced--content.hide {
   display: none;
 }
 
@@ -199,11 +199,14 @@ main {
 }
 
 .list-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  max-width: 100%;
+  width: 100%;
   user-select: none;
+}
+
+.not-found {
+  width: 100%;
+  margin-top: 16px;
+  text-align: center;
 }
 
 .card {
@@ -663,11 +666,27 @@ main {
   .row > .col-l-11 {width: 91.66%;}
   .row > .col-l-12 {width: 100%;}
 
-  .list-container {
-    width: 1200px;
+  .container {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+    max-width: 1200px;
   }
 
-  .card--param-list > .card--param-item {
-    font-size: 0.75rem;
+  .filter-advanced--container {
+    align-self: flex-start;
+    margin-top: 16px;
+    padding: 16px;
+    border: 1px solid rgba(128, 128, 128, 0.5);
+    border-radius: 16px;
+    flex: 0 0 300px;
+  }
+  
+  .filter-advanced--toggle {
+    display: none;
+  }
+  
+  .filter-advanced--content.hide {
+    display: flex;
   }
 }

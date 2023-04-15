@@ -6,7 +6,24 @@ import { PokemonProvider, Type, attributes, types, usePokemon } from 'providers/
 import { useCallback, useState } from 'react';
 
 const Filters = (): JSX.Element => {
-  const { filters, setSearch, setType, setHP, setAttack, setDefense, setSpecialAttack, setSpecialDefense, setSpeed } =
+  const { filters, setSearch } = usePokemon();
+
+  const handleChangeSearch = useCallback(
+    (text: string): void => {
+      setSearch(text);
+    },
+    [setSearch]
+  );
+
+  return (
+    <div className="filter--container">
+      <Search value={filters.search} onChange={handleChangeSearch} />
+    </div>
+  );
+};
+
+const AdvancedFilters = (): JSX.Element => {
+  const { filters, setType, setHP, setAttack, setDefense, setSpecialAttack, setSpecialDefense, setSpeed } =
     usePokemon();
   const [toggle, setToggle] = useState(false);
 
@@ -15,13 +32,6 @@ const Filters = (): JSX.Element => {
       setType(type);
     },
     [setType]
-  );
-
-  const handleChangeSearch = useCallback(
-    (text: string): void => {
-      setSearch(text);
-    },
-    [setSearch]
   );
 
   const handleHPChange = useCallback(
@@ -73,12 +83,11 @@ const Filters = (): JSX.Element => {
   };
 
   return (
-    <div className="filter--container">
-      <Search value={filters.search} onChange={handleChangeSearch} />
+    <div className="filter-advanced--container">
       <button className="filter-advanced--toggle" onClick={handleToggle}>
         {toggle ? 'Hide filters ↑' : 'Show filters ↓'}
       </button>
-      <div className={`filter-advanced--container ${!toggle && 'hide'}`}>
+      <div className={`filter-advanced--content ${!toggle && 'hide'}`}>
         <div className="filter-advanced--types-container">
           {types.map((type) => {
             return (
@@ -144,17 +153,23 @@ const PokemonList = (): JSX.Element => {
   const { pokemon } = usePokemon();
 
   return (
-    <div className="list-container">
-      <div className="row">
-        {pokemon.map((p) => {
-          return (
-            <div key={p.id} className="col-s-6 col-m-4 col-l-3">
-              <Card pokemon={p} />
-            </div>
-          );
-        })}
-      </div>
-    </div>
+    <>
+      {pokemon.length > 0 ? (
+        <div className="list-container">
+          <div className="row">
+            {pokemon.map((p) => {
+              return (
+                <div key={p.id} className="col-s-6 col-m-4">
+                  <Card pokemon={p} />
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      ) : (
+        <div className="not-found">Pokemon not found</div>
+      )}
+    </>
   );
 };
 
@@ -163,7 +178,10 @@ const App = (): JSX.Element => {
     <PokemonProvider>
       <main>
         <Filters />
-        <PokemonList />
+        <div className="container">
+          <AdvancedFilters />
+          <PokemonList />
+        </div>
       </main>
     </PokemonProvider>
   );
