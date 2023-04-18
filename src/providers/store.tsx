@@ -102,7 +102,7 @@ const pokemonSlice = createSlice({
     setType: (state, action: PayloadAction<Type>) => {
       if (state.filters.types.includes(action.payload)) {
         const index = state.filters.types.indexOf(action.payload);
-        state.filters.types.splice(index);
+        state.filters.types.splice(index, 1);
       } else {
         state.filters.types.push(action.payload);
       }
