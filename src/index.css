@@ -21,11 +21,16 @@ button {
 }
 
 main {
-  width: 100vw;
   padding: 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+footer {
+  background-color: rgba(128, 128, 128, 0.2);
+  padding: 8px;
+  font-size: 0.9rem;
 }
 
 .filter--container,.filter-advanced--container {
@@ -696,5 +701,10 @@ main {
   
   .filter-advanced--content.hide {
     display: flex;
+  }
+
+  footer {
+    display: flex;
+    justify-content: center;
   }
 }

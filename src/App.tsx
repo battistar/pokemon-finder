@@ -1,6 +1,7 @@
 import Card from 'components/Card';
 import DualRangeSlider from 'components/DualRangeSlider';
 import FilterChip from 'components/FilterChip';
+import Footer from 'components/Footer';
 import Search from 'components/Search';
 import { PokemonProvider, Type, attributes, types, usePokemon } from 'providers/store';
 import { useCallback, useState } from 'react';
@@ -189,6 +190,7 @@ const App = (): JSX.Element => {
           <PokemonList />
         </div>
       </main>
+      <Footer />
     </PokemonProvider>
   );
 };

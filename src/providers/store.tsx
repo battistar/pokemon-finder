@@ -213,7 +213,7 @@ const selectSpeed = (state: RootState): [number, number] => {
   return state.pokemon.filters.speed;
 };
 
-export const PokemonProvider = ({ children }: { children: JSX.Element }): JSX.Element => {
+export const PokemonProvider = ({ children }: { children: JSX.Element | JSX.Element[] }): JSX.Element => {
   return <Provider store={store}>{children}</Provider>;
 };
 
