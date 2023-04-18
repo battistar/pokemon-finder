@@ -125,10 +125,13 @@ const pokemonSlice = createSlice({
     setSpeed: (state, action: PayloadAction<[number, number]>) => {
       state.filters.speed = action.payload;
     },
+    reset: (state) => {
+      state.filters = initialState.filters;
+    },
   },
 });
 
-const { setSearch, setType, setHP, setAttack, setDefense, setSpecialAttack, setSpecialDefense, setSpeed } =
+const { setSearch, setType, setHP, setAttack, setDefense, setSpecialAttack, setSpecialDefense, setSpeed, reset } =
   pokemonSlice.actions;
 
 const store = configureStore({
@@ -225,15 +228,16 @@ export const usePokemon = (): {
     specialAttack: [number, number];
     specialDefense: [number, number];
     speed: [number, number];
+    setSearch: (search: string) => void;
+    setType: (type: Type) => void;
+    setHP: (range: [number, number]) => void;
+    setAttack: (range: [number, number]) => void;
+    setDefense: (range: [number, number]) => void;
+    setSpecialAttack: (range: [number, number]) => void;
+    setSpecialDefense: (range: [number, number]) => void;
+    setSpeed: (range: [number, number]) => void;
+    reset: () => void;
   };
-  setSearch: (search: string) => void;
-  setType: (type: Type) => void;
-  setHP: (range: [number, number]) => void;
-  setAttack: (range: [number, number]) => void;
-  setDefense: (range: [number, number]) => void;
-  setSpecialAttack: (range: [number, number]) => void;
-  setSpecialDefense: (range: [number, number]) => void;
-  setSpeed: (range: [number, number]) => void;
 } => {
   const pokemon = useSelector(selectPokemon);
   const search = useSelector(selectSearch);
@@ -258,14 +262,15 @@ export const usePokemon = (): {
       specialAttack: specialAttack,
       specialDefense: specialDefense,
       speed: speed,
+      setSearch: (s) => dispatch(setSearch(s)),
+      setType: (t) => dispatch(setType(t)),
+      setHP: (h) => dispatch(setHP(h)),
+      setAttack: (a) => dispatch(setAttack(a)),
+      setDefense: (d) => dispatch(setDefense(d)),
+      setSpecialAttack: (sa) => dispatch(setSpecialAttack(sa)),
+      setSpecialDefense: (sd) => dispatch(setSpecialDefense(sd)),
+      setSpeed: (s) => dispatch(setSpeed(s)),
+      reset: () => dispatch(reset()),
     },
-    setSearch: (s) => dispatch(setSearch(s)),
-    setType: (t) => dispatch(setType(t)),
-    setHP: (h) => dispatch(setHP(h)),
-    setAttack: (a) => dispatch(setAttack(a)),
-    setDefense: (d) => dispatch(setDefense(d)),
-    setSpecialAttack: (sa) => dispatch(setSpecialAttack(sa)),
-    setSpecialDefense: (sd) => dispatch(setSpecialDefense(sd)),
-    setSpeed: (s) => dispatch(setSpeed(s)),
   };
 };

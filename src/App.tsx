@@ -6,13 +6,13 @@ import { PokemonProvider, Type, attributes, types, usePokemon } from 'providers/
 import { useCallback, useState } from 'react';
 
 const Filters = (): JSX.Element => {
-  const { filters, setSearch } = usePokemon();
+  const { filters } = usePokemon();
 
   const handleChangeSearch = useCallback(
     (text: string): void => {
-      setSearch(text);
+      filters.setSearch(text);
     },
-    [setSearch]
+    [filters]
   );
 
   return (
@@ -23,63 +23,66 @@ const Filters = (): JSX.Element => {
 };
 
 const AdvancedFilters = (): JSX.Element => {
-  const { filters, setType, setHP, setAttack, setDefense, setSpecialAttack, setSpecialDefense, setSpeed } =
-    usePokemon();
+  const { filters } = usePokemon();
   const [toggle, setToggle] = useState(false);
 
   const handleClickChip = useCallback(
     (type: Type): void => {
-      setType(type);
+      filters.setType(type);
     },
-    [setType]
+    [filters]
   );
 
   const handleHPChange = useCallback(
     (range: [number, number]) => {
-      setHP(range);
+      filters.setHP(range);
     },
-    [setHP]
+    [filters]
   );
 
   const handleAttackChange = useCallback(
     (range: [number, number]) => {
-      setAttack(range);
+      filters.setAttack(range);
     },
-    [setAttack]
+    [filters]
   );
 
   const handleDefenseChange = useCallback(
     (range: [number, number]) => {
-      setDefense(range);
+      filters.setDefense(range);
     },
-    [setDefense]
+    [filters]
   );
 
   const handleSpecialAttackChange = useCallback(
     (range: [number, number]) => {
-      setSpecialAttack(range);
+      filters.setSpecialAttack(range);
     },
-    [setSpecialAttack]
+    [filters]
   );
 
   const handleSpecialDefenseChange = useCallback(
     (range: [number, number]) => {
-      setSpecialDefense(range);
+      filters.setSpecialDefense(range);
     },
-    [setSpecialDefense]
+    [filters]
   );
 
   const handleSpeedChange = useCallback(
     (range: [number, number]) => {
-      setSpeed(range);
+      filters.setSpeed(range);
     },
-    [setSpeed]
+    [filters]
   );
 
   const handleToggle = (): void => {
     setToggle((prevToggle) => {
       return !prevToggle;
     });
+  };
+
+  const handleResetClick = (): void => {
+    filters.reset();
   };
 
   return (
@@ -143,6 +146,9 @@ const AdvancedFilters = (): JSX.Element => {
             value={filters.speed}
             onChange={handleSpeedChange}
           />
+          <button className="filter-advanced--reset-button" onClick={handleResetClick}>
+            Reset
+          </button>
         </div>
       </div>
     </div>
